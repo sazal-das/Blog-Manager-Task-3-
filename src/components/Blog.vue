@@ -61,7 +61,7 @@ export default {
   cursor: pointer;
 }
 img {
-  width: 70px;
+  width: 100px;
   height: 100px;
 }
 @media (max-width: 500px) {

@@ -14,11 +14,15 @@ const actions = {
         commit('setBlogs', response.data); 
     },
     // Add Blog
-    async addBlog( {commit,state}, {title , body, imgData} ) {
+    async addBlog( {commit}, {title , body, imgData} ) {
 
+
+        // **** Getting new added blogs id ****
         //let lastId = Math.max(...state.blogs.map(b=>b.id));
+        // **** Getting new added blogs id ****
         let lastId = state.blogs.length;
-        commit('newBlog', {id:lastId+1, title, body, imgData});
+        // ***  Commiting before posting data on server... Using it for server loading problem ***
+        commit('newBlog', {id:lastId+1, title, body, imgData});      
 
         const response = await axios.post('https://jsonplaceholder.typicode.com/posts',{title, body});
         console.log(response.data);

@@ -32,45 +32,43 @@
         </form>
       </div>
     </div>
-    <Blog/>
+    <Blog />
   </div>
-
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import Blog from './Blog.vue';
-// import {resizeImage} from '../helpers/helpers'
+import Blog from "./Blog.vue";
 export default {
   name: "AddBlog",
   components: {
-      Blog
+    Blog
   },
   data() {
     return {
       title: "",
       body: "",
-      imgData:''
+      imgData: ""
     };
   },
   methods: {
     ...mapActions(["addBlog"]),
     onSubmit(e) {
       e.preventDefault();
-      this.addBlog({title: this.title, body: this.body,imgData:this.imgData});
-      
+      this.addBlog({
+        title: this.title,
+        body: this.body,
+        imgData: this.imgData
+      });
     },
-     onFileChoose({target:{files}}){
+    onFileChoose({ target: { files } }) {
       // console.log(files);
       const reader = new FileReader();
-      reader.addEventListener('load', (event) => {
+      reader.addEventListener("load", event => {
         this.imgData = event.target.result;
       });
-      // reader.readAsDataURL(await resizeImage({file:files[0],maxSize:100}));
       reader.readAsDataURL(files[0]);
-
-
-         }
+    }
   }
 };
 </script>
@@ -88,5 +86,4 @@ h3 {
   background-color: white;
   padding: 20px;
 }
-
 </style>
