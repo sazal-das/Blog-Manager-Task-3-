@@ -14,11 +14,17 @@ const actions = {
         commit('setBlogs', response.data); 
     },
     // Add Blog
-    async addBlog( {commit}, title ,body ) {
+    async addBlog( {commit,state}, {title , body, imgData} ) {
+
+        //let lastId = Math.max(...state.blogs.map(b=>b.id));
+        let lastId = state.blogs.length;
+        commit('newBlog', {id:lastId+1, title, body, imgData});
+
         const response = await axios.post('https://jsonplaceholder.typicode.com/posts',{title, body});
         console.log(response.data);
+
+        // commit('newBlog', {...response.data, imgData});
         
-        commit('newBlog', response.data);
 
     },
     // Delete Blog
@@ -29,9 +35,9 @@ const actions = {
 };
 
 const mutations = {
-    setBlogs: (state, blogs) => (state.blogs = blogs),
-    newBlog: (state, blog) => state.blogs.unshift(blog),
-    removeBlog: (state, id) => state.blogs = state.blogs.filter(blog => blog.id !== id)
+    setBlogs: (state, blogs) => {state.blogs = blogs},
+    newBlog: (state, blog) => {state.blogs.unshift(blog)},
+    removeBlog: (state, id) => {state.blogs = state.blogs.filter(blog => blog.id !== id)}
 };
 
 

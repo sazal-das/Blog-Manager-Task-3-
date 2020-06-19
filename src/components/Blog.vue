@@ -4,8 +4,15 @@
       <div class="blogs">
         <div v-for="blog in allBlogs" :key="blog.id" class="blog">
           <div class="element">
-            <h4>{{blog.title}}</h4>
-            <p>{{blog.body}}</p>
+            <div class="row">
+              <div class="col-2">
+                <img v-if="blog.imgData" :src="blog.imgData" alt />
+              </div>
+              <div class="col-10 text-left">
+                <h4>{{blog.title}}</h4>
+                <p>{{blog.body}}</p>
+              </div>
+            </div>
             <button @click="deleteBlog(blog.id)" class="btn btn-danger">DELETE</button>
           </div>
         </div>
@@ -16,18 +23,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Header from './Header.vue';
 export default {
   name: "Blog",
-  component: {
-    Header
-  },
   methods: {
-      ...mapActions(['fetchBlogs','deleteBlog'])
+    ...mapActions(["fetchBlogs", "deleteBlog"])
   },
   computed: mapGetters(["allBlogs"]),
-  created(){
-      this.fetchBlogs();
+  created() {
+    this.fetchBlogs();
   }
 };
 </script>
@@ -51,16 +54,19 @@ export default {
   position: relative;
   cursor: pointer;
 }
-.btn{
+.btn {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
+}
+img {
+  width: 70px;
+  height: 100px;
 }
 @media (max-width: 500px) {
   .blogs {
     grid-template-columns: 1fr;
   }
 }
-
 </style>

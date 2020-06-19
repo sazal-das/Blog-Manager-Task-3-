@@ -26,38 +26,51 @@
           </div>
           <div class="form-group">
             <label for="banar">Banar:</label>
-            <input type="file" class="form-control-file" id="banar" />
+            <input @change="onFileChoose" type="file" class="form-control-file" id="banar" />
           </div>
           <button class="btn btn-success justify-content-end" type="submit" value="Submit">Add Blog</button>
         </form>
       </div>
     </div>
+    <Blog/>
   </div>
 
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import Header from './Header.vue';
+import Blog from './Blog.vue';
+// import {resizeImage} from '../helpers/helpers'
 export default {
   name: "AddBlog",
-  component: {
-      Header
+  components: {
+      Blog
   },
   data() {
     return {
       title: "",
-      body: ""
+      body: "",
+      imgData:''
     };
   },
   methods: {
     ...mapActions(["addBlog"]),
     onSubmit(e) {
       e.preventDefault();
-     /*  this.addBlog(this.title, this.body); */
-      this.$store.state.blogs.title=this.title
-      this.$store.state.blogs.body=this.body
-    }
+      this.addBlog({title: this.title, body: this.body,imgData:this.imgData});
+      
+    },
+     onFileChoose({target:{files}}){
+      // console.log(files);
+      const reader = new FileReader();
+      reader.addEventListener('load', (event) => {
+        this.imgData = event.target.result;
+      });
+      // reader.readAsDataURL(await resizeImage({file:files[0],maxSize:100}));
+      reader.readAsDataURL(files[0]);
+
+
+         }
   }
 };
 </script>
